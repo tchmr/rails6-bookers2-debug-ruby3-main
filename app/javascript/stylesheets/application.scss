@@ -1,2 +1,10 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+.favorited {
+  color: red;
+}
+
+.not-favorited {
+  color: blue;
+}
