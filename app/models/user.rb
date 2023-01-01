@@ -33,4 +33,22 @@ class User < ApplicationRecord
   def following?(followed_id)
     self.following_users.find_by(id: followed_id).present?
   end
+  
+  def search_by(params)
+    search_method = params(:search_method)
+    search_word = params(:word)
+    return if search_method.blank?
+    
+    # TODO: LIKEを使って表現する
+    # TODO: name, introductionのor検索
+    case search_method
+    when 'perfect'
+      User.where(name: search_word)
+    when 'prefix'
+      # User.where("name LIKE %")
+    when 'suffix'
+      # User.where(name: search_word)
+    when 'partial'
+      # User.where(name: search_word)
+  end
 end
