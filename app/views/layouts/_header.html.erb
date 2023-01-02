@@ -54,4 +54,18 @@
       </div>
     </div>
   </nav>
+  <% if current_user.present? %>
+  <div class="container">
+    <div class="row">
+      <div>
+        <%= form_with url: "/search", method: :get do |f| %>
+          <%= f.text_field :search_query %>
+          <%= f.select :search_model, ['User', 'Book'], selected: 'User' %>
+          <%= f.select :search_method, [['完全一致', 'perfect'],  ['前方一致', 'prefix'],  ['後方一致', 'suffix'],  ['部分一致', 'partial']], selected: 'perfect' %>
+          <%= f.submit '検索' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %>
 </header>

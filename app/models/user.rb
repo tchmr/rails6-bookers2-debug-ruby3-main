@@ -16,7 +16,26 @@ class User < ApplicationRecord
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { minimum: 1, maximum: 30 }, on: :update
 
-
+  scope :search_by, -> (search_params) {
+    search_method = search_params[:search_method]
+    search_query = search_params[:search_query]
+    return if search_method.blank?
+    
+    case search_method
+    when 'perfect'
+      where(name: search_query).
+      or(User.where(introduction: saerch_query))
+    when 'prefix'
+      where('name LIKE ?', "#{search_query}%").
+      or(User.where('introduction LIKE ?', "#{search_query}%"))
+    when 'suffix'
+      where('name LIKE ?', "%#{search_query}").
+      or(User.where('introduction LIKE ?', "%#{search_query}"))
+    when 'partial'
+      where('name LIKE ?', "%#{search_query}%").
+      or(User.where('introduction LIKE ?', "%#{search_query}%"))
+    end
+  }
 
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
@@ -32,23 +51,5 @@ class User < ApplicationRecord
 
   def following?(followed_id)
     self.following_users.find_by(id: followed_id).present?
-  end
-  
-  def search_by(params)
-    search_method = params(:search_method)
-    search_word = params(:word)
-    return if search_method.blank?
-    
-    # TODO: LIKEを使って表現する
-    # TODO: name, introductionのor検索
-    case search_method
-    when 'perfect'
-      User.where(name: search_word)
-    when 'prefix'
-      # User.where("name LIKE %")
-    when 'suffix'
-      # User.where(name: search_word)
-    when 'partial'
-      # User.where(name: search_word)
   end
 end
