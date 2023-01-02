@@ -1,0 +1,4 @@
+<%= form_with model: [book, book_comment], local: false do |f| %>
+  <%= f.text_area :body, class: 'form-control comment-form', size: "10x10"%>
+  <%= f.submit '送信' %>
+<% end %>
