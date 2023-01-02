@@ -1,1 +1,35 @@
-<h2>検索結果</h2>
+<%if @search_params[:search_model] == 'Book'%>
+  <h2>Books search for "<%= @search_params[:search_query] %>"</h2>
+  <table class="table">
+    <thread>
+      <th></th>
+      <th>Title</th>
+      <th>Opinion</th>
+      <th colspan="4"></th>
+    </thread>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= image_tag book.user.get_profile_image, size:'50x50' %></td>
+        <td><%= link_to book.title, book_path(book) %></td>
+        <td><%= book.body %></td>
+      </tr>
+    <%end%>
+  </table>
+<% elsif @search_params[:search_model] == 'User' %>
+  <h2>Users search for "<%= @search_params[:search_query] %>"</h2>
+  <table class="table">
+    <thread>
+      <th></th>
+      <th>Name</th>
+      <th>Introduction</th>
+      <th colspan="4"></th>
+    </thread>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= image_tag user.get_profile_image, size:'50x50' %></td>
+        <td><%= link_to user.name, user_path(user) %></td>
+        <td><%= user.introduction %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

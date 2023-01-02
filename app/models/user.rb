@@ -24,7 +24,7 @@ class User < ApplicationRecord
     case search_method
     when 'perfect'
       where(name: search_query).
-      or(User.where(introduction: saerch_query))
+      or(User.where(introduction: search_query))
     when 'prefix'
       where('name LIKE ?', "#{search_query}%").
       or(User.where('introduction LIKE ?', "#{search_query}%"))

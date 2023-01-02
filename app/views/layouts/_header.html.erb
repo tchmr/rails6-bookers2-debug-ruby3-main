@@ -55,9 +55,9 @@
     </div>
   </nav>
   <% if current_user.present? %>
-  <div class="container">
+  <div class="container my-3">
     <div class="row">
-      <div>
+      <div class="mx-auto">
         <%= form_with url: "/search", method: :get do |f| %>
           <%= f.text_field :search_query %>
           <%= f.select :search_model, ['User', 'Book'], selected: 'User' %>

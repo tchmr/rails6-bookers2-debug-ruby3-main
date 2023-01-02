@@ -14,7 +14,7 @@ class Book < ApplicationRecord
     case search_method
     when 'perfect'
       where(title: search_query).
-      or(Book.where(body: saerch_query))
+      or(Book.where(body: search_query))
     when 'prefix'
       where('title LIKE ?', "#{search_query}%").
       or(Book.where('body LIKE ?', "#{search_query}%"))
