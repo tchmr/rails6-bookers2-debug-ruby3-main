@@ -5,6 +5,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @new_book = Book.new
     @book_comment = BookComment.new
+    @book.book_access_histories.create!(user: current_user) if current_user.present?
   end
 
   def index
