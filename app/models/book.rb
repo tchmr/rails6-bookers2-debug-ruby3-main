@@ -26,6 +26,14 @@ class Book < ApplicationRecord
       or(Book.where('body LIKE ?', "%#{search_query}%"))
     end
   }
+  
+  scope :sorted_by_favorites, -> (target_date: 1.week.ago, sort: 'desc') {
+    left_joins(:favorites)
+    .select('books.id, books.title, books.body, books.user_id, count(favorites.id) as favorites_count')
+    .group(:id)
+    .where('favorites.created_at >= ? OR favorites.id IS NULL', target_date)
+    .order("favorites_count #{sort}")
+  }
 
   def posted_by?(user)
     self&.user_id == user&.id
