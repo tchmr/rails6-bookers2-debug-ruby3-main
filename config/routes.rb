@@ -12,5 +12,9 @@ Rails.application.routes.draw do
     resource :relationships, only: [:create, :destroy]
     get 'follows'=>'relationships#follows', as: 'follows'
     get 'followers'=>'relationships#followers', as: 'followers'
+    resource :chat_room, only: [:create]
+  end
+  resources :chat_rooms, only: [:show] do
+    resources :messages, only: [:create]
   end
 end

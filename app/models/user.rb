@@ -53,4 +53,19 @@ class User < ApplicationRecord
   def following?(followed_id)
     self.following_users.find_by(id: followed_id).present?
   end
+  
+  def interactive_follow?(user)
+    self.following_users.include?(user) &&
+    self.followed_users.include?(user)
+  end
+  
+  def message_partner(chat_room)
+    relationship = chat_room.relationship
+    
+    if self.id == relationship.follower_id
+      User.find(relationship.followed_id)
+    elsif self.id == relationship.followed_id
+      User.find(relationship.follower_id)
+    end
+  end
 end
