@@ -68,4 +68,9 @@ class User < ApplicationRecord
       User.find(relationship.follower_id)
     end
   end
+  
+  # 指定した期間中に投稿した本の合計を取得する
+  def count_posted_books_by(target_range: Time.zone.now.all_day)
+    self.books.where(created_at: target_range).count
+  end
 end
