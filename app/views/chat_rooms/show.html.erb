@@ -2,6 +2,7 @@
 <% @messages.each do |message| %>
   <p><%= message.body %></p>
 <% end %>
+
 <%= form_with model: [@chat_room, @message] do |f| %>
   <%= f.text_field :body %>
 <% end %>
