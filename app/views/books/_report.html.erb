@@ -5,9 +5,11 @@
     <th>前日比</th>
   </thread>
   <tr>
-    <td>1</td>
-    <td>1</td>
-    <td>1</td>
+    <% today_count = user.count_posted_books_by %>
+    <% yesterday_count = user.count_posted_books_by(target_range: 1.day.ago.all_day) %>
+    <td><%= today_count %></td>
+    <td><%= yesterday_count %></td>
+    <td><%= culc_rate(today_count, yesterday_count) %>%</td>
   </tr>
 </table>
 
@@ -18,8 +20,10 @@
     <th>前週比</th>
   </thread>
   <tr>
-    <td>1</td>
-    <td>1</td>
-    <td>1</td>
+    <% current_week_count = user.count_posted_books_by(target_range: all_current_week) %>
+    <% previous_week_count = user.count_posted_books_by(target_range: all_last_week) %>
+    <td><%= current_week_count %></td>
+    <td><%= previous_week_count %></td>
+    <td><%= culc_rate(current_week_count, previous_week_count) %>%</td>
   </tr>
 </table>

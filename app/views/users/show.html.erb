@@ -10,7 +10,7 @@
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
       <h2>投稿の前日比・前週比</h2>
-      <%= render 'books/report' %>
+      <%= render 'books/report', user: @user %>
     </div>
   </div>
 </div>
