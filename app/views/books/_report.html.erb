@@ -1,0 +1,29 @@
+<table class="table table-bordered">
+  <thread>
+    <th>今日の投稿数</th>
+    <th>前日の投稿数</th>
+    <th>前日比</th>
+  </thread>
+  <tr>
+    <% today_count = user.count_posted_books_by %>
+    <% yesterday_count = user.count_posted_books_by(target_range: 1.day.ago.all_day) %>
+    <td><%= today_count %></td>
+    <td><%= yesterday_count %></td>
+    <td><%= culc_rate(today_count, yesterday_count) %>%</td>
+  </tr>
+</table>
+
+<table class="table table-bordered">
+  <thread>
+    <th>今週の投稿数</th>
+    <th>前週の投稿数</th>
+    <th>前週比</th>
+  </thread>
+  <tr>
+    <% current_week_count = user.count_posted_books_by(target_range: all_current_week) %>
+    <% previous_week_count = user.count_posted_books_by(target_range: all_last_week) %>
+    <td><%= current_week_count %></td>
+    <td><%= previous_week_count %></td>
+    <td><%= culc_rate(current_week_count, previous_week_count) %>%</td>
+  </tr>
+</table>
