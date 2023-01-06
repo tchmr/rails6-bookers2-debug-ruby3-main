@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_03_004946) do
+ActiveRecord::Schema.define(version: 2023_01_06_122827) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -65,11 +65,27 @@ ActiveRecord::Schema.define(version: 2023_01_03_004946) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "chat_rooms", force: :cascade do |t|
+    t.integer "relationship_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["relationship_id"], name: "index_chat_rooms_on_relationship_id"
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
     t.integer "book_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "chat_room_id"
+    t.integer "from_id"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -100,6 +116,8 @@ ActiveRecord::Schema.define(version: 2023_01_03_004946) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "book_access_histories", "books"
   add_foreign_key "book_access_histories", "users"
+  add_foreign_key "chat_rooms", "relationships"
+  add_foreign_key "messages", "chat_rooms"
   add_foreign_key "relationships", "users", column: "followed_id"
   add_foreign_key "relationships", "users", column: "follower_id"
 end

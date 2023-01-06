@@ -1,0 +1,7 @@
+<h1><%= current_user.message_partner(@chat_room)&.name %>さんとのチャット</h1>
+<% @messages.each do |message| %>
+  <p><%= message.body %></p>
+<% end %>
+<%= form_with model: [@chat_room, @message] do |f| %>
+  <%= f.text_field :body %>
+<% end %>

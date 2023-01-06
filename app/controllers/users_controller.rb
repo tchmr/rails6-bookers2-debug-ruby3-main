@@ -5,6 +5,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books.sorted_by_favorites
     @book = Book.new
+    @relationship = Relationship.get_relationship_for_chat_room(current_user, @user)
+
+    @chat_room = ChatRoom.find_by(relationship: @relationship)
   end
 
   def index
