@@ -60,34 +60,36 @@
 <canvas id="myChart"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-var ctx = document.getElementById('myChart');
-const data_list = [
-  <%= ago_6day_count %>,
-  <%= ago_5day_count %>,
-  <%= ago_4day_count %>,
-  <%= ago_3day_count %>,
-  <%= ago_2day_count %>,
-  <%= yesterday_count %>,
-  <%= today_count %>,
-]
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
-        datasets: [{
-            label: '投稿した本の数',
-            data: data_list,
-            borderColor: 'blue',
-            borderWidth: 3,
-            lineTension: 0.3,
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
+$(document).on('turbolinks:load', function() {
+  var ctx = document.getElementById('myChart');
+  const data_list = [
+    <%= ago_6day_count %>,
+    <%= ago_5day_count %>,
+    <%= ago_4day_count %>,
+    <%= ago_3day_count %>,
+    <%= ago_2day_count %>,
+    <%= yesterday_count %>,
+    <%= today_count %>,
+  ]
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+          datasets: [{
+              label: '投稿した本の数',
+              data: data_list,
+              borderColor: 'blue',
+              borderWidth: 3,
+              lineTension: 0.3,
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+})
 </script>
