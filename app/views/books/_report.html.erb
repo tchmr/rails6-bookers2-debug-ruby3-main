@@ -1,3 +1,4 @@
+<h2>投稿の前日比・前週比</h2>
 <table class="table table-bordered">
   <thread>
     <th>今日の投稿数</th>
@@ -27,3 +28,74 @@
     <td><%= culc_rate(current_week_count, previous_week_count) %>%</td>
   </tr>
 </table>
+
+<h2 style="margin-top: 50px;">7日間分の投稿数</h2>
+<% ago_6day_count = user.count_posted_books_by(target_range: 6.days.ago.all_day) %>
+<% ago_5day_count = user.count_posted_books_by(target_range: 5.days.ago.all_day) %>
+<% ago_4day_count = user.count_posted_books_by(target_range: 4.days.ago.all_day) %>
+<% ago_3day_count = user.count_posted_books_by(target_range: 3.days.ago.all_day) %>
+<% ago_2day_count = user.count_posted_books_by(target_range: 2.days.ago.all_day) %>
+<table class="table table-bordered">
+  <thread>
+    <th>6日前</th>
+    <th>5日前</th>
+    <th>4日前</th>
+    <th>3日前</th>
+    <th>2日前</th>
+    <th>1日前</th>
+    <th>今日</th>
+  </thread>
+  <tr>
+    <td><%= ago_6day_count %></td>
+    <td><%= ago_5day_count %></td>
+    <td><%= ago_4day_count %></td>
+    <td><%= ago_3day_count %></td>
+    <td><%= ago_2day_count %></td>
+    <td><%= yesterday_count %></td>
+    <td><%= today_count %></td>
+  </tr>
+</table>
+
+<p style="text-align: center;">7日間の投稿数の比較</p>
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let myChart = null
+$(document).on('turbolinks:load', function() {
+  if (myChart) {
+    myChart.destroy()
+  }
+  const ctx = document.getElementById('myChart');
+  const data_list = [
+    <%= ago_6day_count %>,
+    <%= ago_5day_count %>,
+    <%= ago_4day_count %>,
+    <%= ago_3day_count %>,
+    <%= ago_2day_count %>,
+    <%= yesterday_count %>,
+    <%= today_count %>,
+  ]
+  
+  const chartDateSet = {
+    type: 'line',
+    data: {
+        labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+        datasets: [{
+            label: '投稿した本の数',
+            data: data_list,
+            borderColor: 'blue',
+            borderWidth: 3,
+            lineTension: 0.3,
+        }]
+    },
+    options: {
+      scales: {
+        y: {
+            beginAtZero: true
+        }
+      }
+    }
+  }
+  myChart = new Chart(ctx, chartDateSet);
+})
+</script>
