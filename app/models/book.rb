@@ -35,6 +35,12 @@ class Book < ApplicationRecord
     .where('favorites.created_at >= ? OR favorites.id IS NULL', target_date)
     .order("favorites_count #{sort}")
   }
+  
+  scope :count_by_date, -> (date: Time.zone.now) {
+    target_range = date.all_day
+    
+    where(created_at: target_range).count
+  }
 
   def posted_by?(user)
     self&.user_id == user&.id

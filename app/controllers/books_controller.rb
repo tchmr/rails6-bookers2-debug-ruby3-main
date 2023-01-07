@@ -42,11 +42,20 @@ class BooksController < ApplicationController
     @book.destroy
     redirect_to books_path
   end
+  
+  def book_count_search
+    date = Time.parse(date_params[:date])
+    @searched_books_count = Book.count_by_date(date: date)
+  end
 
   private
 
   def book_params
     params.require(:book).permit(:title, :body)
+  end
+  
+  def date_params
+    params.permit(:date)
   end
 
   def ensure_correct_user

@@ -10,6 +10,12 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'index', books: @books%>
+      <!--日付指定件数検索-->
+      <%= form_with url: book_count_search_path, method: :get, local: false, class: 'book-count-search-form' do |f| %>
+        <%= f.date_field :date %>
+        <%= f.submit '検索', class: "btn btn-success" %>
+      <% end %>
+      <div class="book-count-search-result"></div>
     </div>
   </div>
 </div>
