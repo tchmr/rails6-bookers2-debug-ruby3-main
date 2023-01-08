@@ -1,11 +1,31 @@
 <table class='table'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>グループ名</th>
+      <th>紹介文</th>
+      <th>メンバー</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
       <td><%= image_tag group.get_profile_image, size: '50x50' %></td>
       <td><%= group.name %></td>
       <td><%= group.introduction %></td>
+      <td>
+        <% group.users.each do |user| %>
+          <p style="margin-bottom: 3px;"><%= user.name %></p>
+        <% end %>
+      </td>
       <% if group.owner == current_user %>
         <td><%= link_to 'Edit', edit_group_path(group), class: 'btn btn-success' %></td>
+      <% else %>
+        <% if current_user.menber_of_group?(group) %>
+          <td><%= link_to 'Leave the group', group_leave_path(group), method: :delete, class: 'btn btn-danger' %></td>
+        <% else %>
+          <td><%= link_to 'Join the group', group_join_path(group), method: :post, class: 'btn btn-success' %></td>
+        <% end %>
       <% end %>
     </tr>
   </tbody>

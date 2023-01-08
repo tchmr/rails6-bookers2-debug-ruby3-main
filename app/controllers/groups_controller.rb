@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[show edit update join leave]
+  before_action :set_group, only: %i[show edit update]
+  before_action :set_group_by_group_id, only: %i[join leave]
   before_action :ensure_correct_user, only: %i[edit update]
 
   def index
@@ -20,6 +21,7 @@ class GroupsController < ApplicationController
     @group.owner_id = current_user.id
 
     if @group.save
+      GroupUser.create(group: @group, user: current_user)
       redirect_to groups_path
     else
       render :new
@@ -39,15 +41,30 @@ class GroupsController < ApplicationController
   end
 
   def join
+    if GroupUser.create(group: @group, user: current_user)
+      redirect_to group_path(@group)
+    else
+      redirect_to groups_path, notice: 'グループの参加に失敗しました'
+    end
   end
 
   def leave
+    group_user = GroupUser.find_by(group: @group, user: current_user)
+    if group_user.destroy
+      redirect_to groups_path
+    else
+      redirect_to groups_path, notice: 'グループの退会に失敗しました'
+    end
   end
 
   private
 
   def set_group
     @group = Group.find(params[:id])
+  end
+
+  def set_group_by_group_id
+    @group = Group.find(params[:group_id])
   end
 
   def group_params

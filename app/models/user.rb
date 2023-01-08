@@ -75,4 +75,9 @@ class User < ApplicationRecord
   def count_posted_books_by(target_range: Time.zone.now.all_day)
     self.books.where(created_at: target_range).count
   end
+  
+  # グループの参加者であるかを判定
+  def menber_of_group?(group)
+    group.users.include?(self)
+  end
 end
