@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 mx-auto">
+      <h2>送信が完了しました</h2>
+      <p style="margin-top: 30px;">内容は以下のとおりです。</p>
+      <div class="result-block">
+        <p>[タイトル]</p>
+        <p><%= @title %></p>
+      </div>
+      <div class="result-block">
+        <p>[本文]</p>
+        <p><%= @content %></p>
+      </div>
+      <%= link_to 'グループ一覧に戻る', groups_path %>
+    </div>
+  </div>
+</div>

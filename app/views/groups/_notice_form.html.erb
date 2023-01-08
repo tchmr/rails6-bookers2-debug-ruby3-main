@@ -1,0 +1,15 @@
+<%= form_with url: group_send_mail_path(group), method: :post do |f| %>
+  <div class="group-input-form">
+    <p>Title</p>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="group-input-form">
+    <p>Content</p>
+    <%= f.text_area :content, class: 'form-control', size: "10x10" %>
+  </div>
+
+  <div class="group-input-form text-right">
+    <%= f.submit '送信', class: "btn btn-success group-form-btn" %>
+  </div>
+<% end %>

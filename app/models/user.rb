@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :following_users, through: :following_relationships, source: :followed
   has_many :followed_users, through: :followed_relationships, source: :follower
   has_many :book_access_histories, dependent: :destroy
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
   has_one_attached :profile_image
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
@@ -72,5 +74,10 @@ class User < ApplicationRecord
   # 指定した期間中に投稿した本の合計を取得する
   def count_posted_books_by(target_range: Time.zone.now.all_day)
     self.books.where(created_at: target_range).count
+  end
+  
+  # グループの参加者であるかを判定
+  def menber_of_group?(group)
+    group.users.include?(self)
   end
 end
