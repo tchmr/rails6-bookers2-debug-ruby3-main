@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[show edit update]
-  before_action :set_group_by_group_id, only: %i[join leave]
-  before_action :ensure_correct_user, only: %i[edit update]
+  before_action :set_group_by_group_id, only: %i[join leave notice send_mail]
+  before_action :ensure_correct_user, only: %i[edit update notice]
 
   def index
     @groups = Group.all
@@ -56,6 +56,19 @@ class GroupsController < ApplicationController
       redirect_to groups_path, notice: 'グループの退会に失敗しました'
     end
   end
+  
+  def notice
+    # メール作成画面
+  end
+  
+  def send_mail
+    target_users = @group.users.where.not(id: current_user.id)
+    @title = notice_mail_params[:title]
+    @content = notice_mail_params[:content]
+    target_users.each do |user|
+      NotificationMailer.with(user: user, title: @title, content: @content).group_notice.deliver_later
+    end
+  end
 
   private
 
@@ -69,6 +82,10 @@ class GroupsController < ApplicationController
 
   def group_params
     params.require(:group).permit(:name, :introduction, :profile_image)
+  end
+  
+  def notice_mail_params
+    params.permit(:title, :content)
   end
 
   def ensure_correct_user

@@ -5,7 +5,7 @@
       <th>グループ名</th>
       <th>紹介文</th>
       <th>メンバー</th>
-      <th colspan="1"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +20,7 @@
       </td>
       <% if group.owner == current_user %>
         <td><%= link_to 'Edit', edit_group_path(group), class: 'btn btn-success' %></td>
+        <td><%= link_to 'Notice an Event', group_notice_path(group), class: 'btn btn-success' %></td>
       <% else %>
         <% if current_user.menber_of_group?(group) %>
           <td><%= link_to 'Leave the group', group_leave_path(group), method: :delete, class: 'btn btn-danger' %></td>

@@ -24,5 +24,7 @@ Rails.application.routes.draw do
   resources :groups, only: [:index, :show, :new, :create, :edit, :update] do
     post 'join' => 'groups#join', as: 'join'
     delete 'leave' => 'groups#leave', as: 'leave'
+    get 'notice' => 'groups#notice'
+    post 'send_mail' => 'groups#send_mail'
   end
 end

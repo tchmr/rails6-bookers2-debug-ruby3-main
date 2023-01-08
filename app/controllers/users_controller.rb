@@ -22,7 +22,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.assign_attributes(user_params)
     if @user.save
-    # if @user.update(user_params)
       redirect_to users_path, notice: "You have updated user successfully."
     else
       render "edit"
