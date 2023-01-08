@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @book = Book.new
   end
 
   def new

@@ -1,20 +1,20 @@
 <%= form_with model: group do |f| %>
   <div>
-    <%= f.label 'グループ名' %>
-    <%= f.text_field :name %>
+    <p>グループ名</p>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
-  
+
   <div>
-    <%= f.label '紹介文' %>
-    <%= f.text_field :introduction %>
+    <p>紹介文</p>
+    <%= f.text_area :introduction, class: 'form-control', size: "10x10" %>
   </div>
-  
+
   <div>
-    <%= f.label 'グループ画像' %>
+    <p>グループ画像</p>
     <%= f.file_field :profile_image %>
   </div>
-  
+
   <div>
-    <%= f.submit %>
+    <%= f.submit '送信', class: "btn btn-success" %>
   </div>
 <% end %>

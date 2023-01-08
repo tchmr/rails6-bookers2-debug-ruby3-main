@@ -1,0 +1,12 @@
+<table class='table'>
+  <tbody>
+    <tr>
+      <td><%= image_tag group.get_profile_image, size: '50x50' %></td>
+      <td><%= group.name %></td>
+      <td><%= group.introduction %></td>
+      <% if group.owner == current_user %>
+        <td><%= link_to 'Edit', edit_group_path(group), class: 'btn btn-success' %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
